@@ -521,12 +521,18 @@ class AudioPlayer {
   Future<int> setUrl(
     String url, {
     bool isLocal: false,
+    Map<String, String> httpHeaders = const {},
     bool respectSilence = false,
   }) {
     isLocal = isLocalUrl(url);
     return _invokeMethod(
       'setUrl',
-      {'url': url, 'isLocal': isLocal, 'respectSilence': respectSilence},
+      {
+        'url': url,
+        'isLocal': isLocal,
+        'httpHeaders': httpHeaders,
+        'respectSilence': respectSilence,
+      },
     );
   }
 

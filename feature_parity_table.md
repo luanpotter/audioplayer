@@ -19,6 +19,7 @@ Note: LLM means Low Latency Mode.
         <tr><td>local file on device</td><td>yes</td><td>yes</td><td>yes</td><td>no</td></tr>
         <tr><td>local asset</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td></tr>
         <tr><td>external URL file</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td></tr>
+        <tr><td>URL file with http headers</td><td>yes</td><td>no</td><td>no</td><td>no</td></tr>
         <tr><td>external URL stream</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td></tr>
         <tr><td>byte array</td><td>SDK >=23</td><td>not yet</td><td>not yet</td><td>not yet</td></tr>
         <tr><td colspan="5"><strong>Audio Config</strong></td></tr>

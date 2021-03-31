@@ -2,6 +2,7 @@ package xyz.luan.audioplayers
 
 import android.content.Context
 import android.media.*
+import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 
@@ -14,6 +15,7 @@ class WrappedMediaPlayer internal constructor(
 
     private var player: MediaPlayer? = null
     private var url: String? = null
+    private var httpHeaders: Map<String, String>? = null
     private var dataSource: MediaDataSource? = null
     private var volume = 1.0
     private var rate = 1.0f
@@ -30,11 +32,13 @@ class WrappedMediaPlayer internal constructor(
     /**
      * Setter methods
      */
-    override fun setUrl(url: String, isLocal: Boolean) {
-        if (this.url != url) {
+    override fun setUrl(url: String, isLocal: Boolean, httpHeaders: Map<String, String>) {
+        if (this.url != url || this.httpHeaders != httpHeaders) {
             this.url = url
+            this.httpHeaders = httpHeaders
             val player = getOrCreatePlayer()
-            player.setDataSource(url)
+            val uri = Uri.parse(url)
+            player.setDataSource(ref.getApplicationContext(), uri, httpHeaders)
             preparePlayer(player)
         }
 

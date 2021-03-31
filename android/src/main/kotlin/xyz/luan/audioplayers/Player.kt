@@ -15,7 +15,7 @@ abstract class Player {
     abstract fun pause()
 
     abstract fun configAttributes(respectSilence: Boolean, stayAwake: Boolean, duckAudio: Boolean)
-    abstract fun setUrl(url: String, isLocal: Boolean)
+    abstract fun setUrl(url: String, isLocal: Boolean, httpHeaders: Map<String,String> = emptyMap())
     abstract fun setDataSource(mediaDataSource: MediaDataSource?)
     abstract fun setVolume(volume: Double)
     abstract fun setRate(rate: Double)

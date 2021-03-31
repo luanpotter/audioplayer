@@ -1,6 +1,7 @@
 # Changelog
 
 ## [next]
+- Allow HTTP headers in `setUrl` (android only for now)
 
 ## 0.18.3
 - Fix Float vs Double mixup on Swift that prevent non-integer values for volume/playback
