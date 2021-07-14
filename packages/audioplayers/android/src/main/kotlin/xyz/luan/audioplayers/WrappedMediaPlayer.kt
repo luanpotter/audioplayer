@@ -350,22 +350,30 @@ class WrappedMediaPlayer internal constructor(
     }
 
     private fun setAttributes(player: MediaPlayer) {
-        val usage = when {
-            // Works with bluetooth headphones
-            // automatically switch to earpiece when disconnect bluetooth headphones
-            playingRoute != "speakers" -> AudioAttributes.USAGE_VOICE_COMMUNICATION
-            respectSilence -> AudioAttributes.USAGE_NOTIFICATION_RINGTONE
-            else -> AudioAttributes.USAGE_MEDIA
-        }
-        player.setAudioAttributes(
-                AudioAttributes.Builder()
-                        .setUsage(usage)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build()
-        )
-
-        if (usage == AudioAttributes.USAGE_VOICE_COMMUNICATION) {
-            audioManager.isSpeakerphoneOn = false
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val usage = when {
+                // Works with bluetooth headphones
+                // automatically switch to earpiece when disconnect bluetooth headphones
+                playingRoute != "speakers" -> AudioAttributes.USAGE_VOICE_COMMUNICATION
+                respectSilence -> AudioAttributes.USAGE_NOTIFICATION_RINGTONE
+                else -> AudioAttributes.USAGE_MEDIA
+            }
+            player.setAudioAttributes(
+                    AudioAttributes.Builder()
+                            .setUsage(usage)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build()
+            )
+            if (usage == AudioAttributes.USAGE_VOICE_COMMUNICATION) {
+                audioManager.isSpeakerphoneOn = false
+            }
+        } else {
+            // This method is deprecated but must be used on older devices
+            if (playingRoute == "speakers") {
+                player.setAudioStreamType(if (respectSilence) AudioManager.STREAM_RING else AudioManager.STREAM_MUSIC)
+            } else {
+                player.setAudioStreamType(AudioManager.STREAM_VOICE_CALL)
+            }
         }
     }
 
