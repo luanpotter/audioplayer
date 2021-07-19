@@ -117,6 +117,10 @@ class WrappedMediaPlayer internal constructor(
         val player = this.player ?: return
         if (Build.VERSION.SDK_INT >= 23) {
             player.playbackParams = player.playbackParams.setSpeed(this.rate)
+            if (prepared && !playing) {
+                playing = true
+                ref.handleIsPlaying()
+            }
         }
     }
 
